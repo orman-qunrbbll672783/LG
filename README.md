@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌱 ReviveTech - AI-Powered Appliance Efficiency Analysis
 
-## Getting Started
+A beautiful front-end-only mock prototype that simulates an AI system analyzing old appliances and showing how to make them energy-efficient again.
 
-First, run the development server:
+## ✨ Features
+
+- **Landing Page**: Stunning glassmorphism design with animated background
+- **AI Analysis**: Simulated AI processing with progress indicators
+- **Detailed Report**: Comprehensive analysis with charts and visualizations
+- **Mock Data**: All data is simulated - no backend required
+
+## 🛠️ Tech Stack
+
+- **Next.js 16** (App Router)
+- **TailwindCSS 4** - Utility-first CSS
+- **Shadcn/UI** - Beautiful UI components
+- **Lucide React** - Icon library
+- **Recharts** - Data visualization
+- **Poppins Font** - Modern typography
+- **Glassmorphism** - Frosted glass aesthetic with neon green glow
+
+## 🚀 Getting Started
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📄 Pages
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Landing Page (`/`)
+- Hero title with glowing "smart" text
+- Two action buttons: "Take a Picture" and "Scan Barcode"
+- Animated background with blob effects
+- Glassmorphism cards with eco-green glow
 
-## Learn More
+### 2. Analyzing Page (`/analyzing`)
+- Full-screen AI analysis simulation
+- Progress bar with cycling messages
+- Animated icons and particles
+- Auto-redirects to report after ~7 seconds
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Report Page (`/report`)
+- AI Technical Recognition section
+- Benchmark comparison table
+- Energy usage bar chart
+- Efficiency breakdown pie chart
+- AI-recommended upgrade plan
+- Detailed summary with savings metrics
+- "Re-scan Another Appliance" button
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎨 Design Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Glassmorphism**: Frosted glass effect with backdrop blur
+- **Neon Glow**: Subtle eco-green glow effects
+- **Smooth Animations**: Blob animations, progress bars, and transitions
+- **Responsive**: Works beautifully on all screen sizes
+- **Dark Theme**: Gradient background from slate to green
 
-## Deploy on Vercel
+## 📊 Mock Data
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+All data is stored in `/lib/mockData.ts` and includes:
+- Appliance specifications (2005 Whirlpool refrigerator)
+- Modern benchmark comparisons
+- Upgrade recommendations
+- Energy savings calculations
+- Visualization data for charts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎯 Project Structure
+
+```
+my-app/
+├── app/
+│   ├── page.tsx              # Landing page
+│   ├── analyzing/
+│   │   └── page.tsx          # Analysis simulation
+│   ├── report/
+│   │   └── page.tsx          # Results dashboard
+│   ├── layout.tsx            # Root layout
+│   └── globals.css           # Global styles
+├── components/
+│   └── ui/                   # Shadcn UI components
+├── lib/
+│   ├── mockData.ts           # Mock appliance data
+│   └── utils.ts              # Utility functions
+└── public/                   # Static assets
+```
+
+## 🌟 Key Components
+
+- **Shadcn/UI Components**: Button, Card, Progress
+- **Recharts**: BarChart, PieChart with custom styling
+- **Lucide Icons**: Camera, ScanLine, Zap, TrendingUp, etc.
+- **Custom Utilities**: Glass effects, glow animations
+
+## 📝 Notes
+
+- This is a **front-end only** prototype
+- No backend or API calls
+- All data is mocked and hardcoded
+- Perfect for demos and presentations
+
+## 🎨 Color Palette
+
+- **Primary Green**: `#22c55e` (green-500)
+- **Emerald**: `#10b981` (emerald-500)
+- **Background**: Gradient from slate-900 via green-900 to slate-900
+- **Glass**: Semi-transparent with backdrop blur
+
+---
+
+Built with ❤️ using Next.js and modern web technologies
