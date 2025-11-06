@@ -7,35 +7,56 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { lgProducts, mockData } from "@/lib/mockData";
 import { ProductData } from "@/lib/types";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
-import { Cpu, Zap, TrendingUp, RotateCcw, CheckCircle2, AlertCircle } from "lucide-react";
+import { Cpu, Zap, TrendingUp, RotateCcw, CheckCircle2, AlertCircle, Calendar } from "lucide-react";
 
 const COLORS = ["#22c55e", "#10b981", "#059669"];
 
 export default function ReportPage() {
   const router = useRouter();
   const [productData, setProductData] = useState<ProductData>(mockData);
+  const [selectedProduct, setSelectedProduct] = useState<string>("LG Smart Fridge");
+  const [selectedYear, setSelectedYear] = useState<number>(2024);
+  const [availableYears, setAvailableYears] = useState<number[]>([]);
 
   useEffect(() => {
     // Get selected product and year from sessionStorage
-    const selectedProduct = sessionStorage.getItem("selectedProduct");
-    const selectedYear = sessionStorage.getItem("selectedYear");
+    const storedProduct = sessionStorage.getItem("selectedProduct") || "LG Smart Fridge";
+    const storedYear = sessionStorage.getItem("selectedYear") || "2024";
 
-    if (selectedProduct && selectedYear) {
-      const productYears = lgProducts[selectedProduct as keyof typeof lgProducts];
-      if (productYears) {
-        const data = (productYears as any)[selectedYear];
-        if (data) {
-          setProductData(data);
-        }
+    setSelectedProduct(storedProduct);
+    setSelectedYear(parseInt(storedYear));
+
+    // Get available years for the product
+    const productYears = lgProducts[storedProduct as keyof typeof lgProducts];
+    if (productYears) {
+      const years = Object.keys(productYears).map(Number).sort();
+      setAvailableYears(years);
+      
+      const data = (productYears as any)[storedYear];
+      if (data) {
+        setProductData(data);
       }
     }
   }, []);
+
+  const handleYearChange = (year: number) => {
+    setSelectedYear(year);
+    sessionStorage.setItem("selectedYear", year.toString());
+    
+    const productYears = lgProducts[selectedProduct as keyof typeof lgProducts];
+    if (productYears) {
+      const data = (productYears as any)[year];
+      if (data) {
+        setProductData(data);
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-green-900 to-slate-900 py-12 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <h1 className="text-5xl font-bold text-white mb-4">
             Analysis Complete
           </h1>
@@ -43,6 +64,41 @@ export default function ReportPage() {
             Here's how we can make your appliance more efficient
           </p>
         </div>
+
+        {/* Year Selector */}
+        <Card className="glass-dark border-green-400/30 mb-8 glow-green-strong">
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-green-500/20 rounded-lg">
+                <Calendar className="w-6 h-6 text-green-400" />
+              </div>
+              <div>
+                <CardTitle className="text-white text-2xl">Comparison Year Selector</CardTitle>
+                <CardDescription className="text-gray-400">Change the target year to see how the product performs</CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap gap-3 justify-center">
+              {availableYears.map((year) => (
+                <button
+                  key={year}
+                  onClick={() => handleYearChange(year)}
+                  className={`px-8 py-4 rounded-xl border-2 transition-all duration-300 font-bold text-xl ${
+                    selectedYear === year
+                      ? "border-green-400 bg-green-500/30 text-green-400 glow-green-strong scale-110"
+                      : "border-green-400/30 bg-slate-800/50 text-white hover:border-green-400/60 hover:bg-slate-800/70"
+                  }`}
+                >
+                  {year}
+                </button>
+              ))}
+            </div>
+            <p className="text-center text-gray-400 text-sm mt-4">
+              Selected: <span className="text-green-400 font-semibold">{selectedYear}</span> - Comparing against modern benchmarks
+            </p>
+          </CardContent>
+        </Card>
 
         {/* AI Technical Recognition */}
         <Card className="glass-dark border-green-400/30 mb-8 glow-green">
@@ -94,7 +150,7 @@ export default function ReportPage() {
                 <thead>
                   <tr className="border-b border-green-400/30">
                     <th className="text-left py-3 px-4 text-gray-400 font-semibold">Specification</th>
-                    <th className="text-left py-3 px-4 text-gray-400 font-semibold">Your Appliance (2005)</th>
+                    <th className="text-left py-3 px-4 text-gray-400 font-semibold">Your Appliance ({productData.model_year})</th>
                     <th className="text-left py-3 px-4 text-gray-400 font-semibold">Modern Standard (2025)</th>
                     <th className="text-left py-3 px-4 text-gray-400 font-semibold">Gap</th>
                   </tr>

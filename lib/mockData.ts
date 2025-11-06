@@ -3,6 +3,43 @@ import { ProductData } from './types';
 // LG Products Database with multiple years
 export const lgProducts: Record<string, Record<number, ProductData>> = {
   "LG Smart Fridge": {
+    2020: {
+      appliance_name: "LG Smart Fridge 2020",
+      category: "Refrigerator",
+      model_year: 2020,
+      ai_detected_specs: {
+        year: 2020,
+        power_usage: "2.1 kWh/day",
+        cooling_efficiency: "78%",
+        compressor_type: "Standard Inverter",
+        insulation_quality: "Standard"
+      },
+      modern_benchmark: {
+        power_usage: "1.2 kWh/day",
+        cooling_efficiency: "93%",
+        compressor_type: "Smart Inverter Pro"
+      },
+      upgrade_plan: [
+        { title: "Upgrade to Smart Inverter Pro compressor", gain: "+15% efficiency" },
+        { title: "Install AI ThinQ energy optimization", gain: "+8% efficiency" },
+        { title: "Add door cooling+ technology", gain: "+5% efficiency" },
+        { title: "Upgrade insulation system", gain: "+4% efficiency" }
+      ],
+      ai_summary:
+        "Your LG Smart Fridge 2020 has significant upgrade potential. Modernizing to Smart Inverter Pro technology could cut energy use by ~32%, saving around 330 kWh per year. This translates to approximately $40-$53 in annual electricity savings and a reduction of 235kg CO₂ emissions.",
+      visual_data: {
+        before_after_energy: [
+          { label: "Before", usage: 2.1 },
+          { label: "After Upgrade", usage: 1.43 }
+        ],
+        efficiency_breakdown: [
+          { name: "Compressor", value: 15 },
+          { name: "AI Optimization", value: 8 },
+          { name: "Door Cooling", value: 5 },
+          { name: "Insulation", value: 4 }
+        ]
+      }
+    },
     2023: {
       appliance_name: "LG Smart Fridge 2023",
       category: "Refrigerator",
@@ -99,6 +136,37 @@ export const lgProducts: Record<string, Record<number, ProductData>> = {
         ],
         efficiency_breakdown: [
           { name: "Peak Efficiency", value: 100 }
+        ]
+      }
+    },
+    2028: {
+      appliance_name: "LG Smart Fridge 2028",
+      category: "Refrigerator",
+      model_year: 2028,
+      ai_detected_specs: {
+        year: 2028,
+        power_usage: "0.9 kWh/day",
+        cooling_efficiency: "97%",
+        compressor_type: "Quantum Inverter AI",
+        insulation_quality: "Nano-Enhanced"
+      },
+      modern_benchmark: {
+        power_usage: "0.9 kWh/day",
+        cooling_efficiency: "97%",
+        compressor_type: "Quantum Inverter AI"
+      },
+      upgrade_plan: [
+        { title: "Next-gen technology!", gain: "Future-proof design" }
+      ],
+      ai_summary:
+        "Incredible! Your LG Smart Fridge 2028 features cutting-edge Quantum Inverter AI technology with nano-enhanced insulation. This next-generation appliance achieves 97% cooling efficiency while using only 0.9 kWh/day. It represents the pinnacle of sustainable refrigeration technology.",
+      visual_data: {
+        before_after_energy: [
+          { label: "Current", usage: 0.9 },
+          { label: "Future Standard", usage: 0.9 }
+        ],
+        efficiency_breakdown: [
+          { name: "Quantum AI", value: 100 }
         ]
       }
     }

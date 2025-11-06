@@ -34,6 +34,14 @@ export default function Home() {
     interactionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleScanBarcode = () => {
+    // Set default product and year in sessionStorage
+    sessionStorage.setItem("selectedProduct", "LG Smart Fridge");
+    sessionStorage.setItem("selectedYear", "2024");
+    // Redirect directly to report page
+    router.push("/report");
+  };
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-green-900 to-slate-900">
       {/* Animated background elements */}
@@ -207,7 +215,7 @@ export default function Home() {
                   
                   <div className="space-y-4">
                     <Button
-                      onClick={() => router.push("/barcode-scan")}
+                      onClick={handleScanBarcode}
                       size="lg"
                       className="w-full glass-dark glow-green text-white hover:glow-green-strong transition-all duration-300 text-lg px-8 py-6 rounded-xl group"
                     >
@@ -217,7 +225,7 @@ export default function Home() {
                   </div>
 
                   <p className="text-gray-400 text-sm mt-6">
-                    Scan your LG appliance barcode with your camera. Our AI will automatically detect the product and let you choose the comparison year.
+                    View your LG appliance analysis with mock data. Compare different years to see efficiency improvements.
                   </p>
                 </Card>
               </div>
