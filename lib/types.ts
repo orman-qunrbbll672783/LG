@@ -21,6 +21,7 @@ export interface ProductData {
     wash_efficiency?: string;
     compressor_type?: string;
     motor_type?: string;
+
   };
   upgrade_plan: Array<{
     title: string;
