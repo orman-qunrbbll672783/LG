@@ -14,6 +14,7 @@ A beautiful front-end-only mock prototype that simulates an AI system analyzing 
 - **Next.js 16** (App Router)
 - **TailwindCSS 4** - Utility-first CSS
 - **Shadcn/UI** - Beautiful UI components
+- **Framer Motion** - Smooth animations and transitions
 - **Lucide React** - Icon library
 - **Recharts** - Data visualization
 - **Poppins Font** - Modern typography
@@ -38,10 +39,34 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ## 📄 Pages
 
 ### 1. Landing Page (`/`)
-- Hero title with glowing "smart" text
-- Two action buttons: "Take a Picture" and "Scan Barcode"
-- Animated background with blob effects
-- Glassmorphism cards with eco-green glow
+
+**Hero Section:**
+- Large ReviveTech branding with gradient text and glow effect
+- Catchy tagline: "AI-powered product comparison and eco-analysis"
+- Main headline with animated "smart" text
+- "Try Now" button with smooth scroll to interaction section
+- Framer Motion animations for fade-in effects
+
+**About Us Section:**
+- Mission statement describing ReviveTech's purpose
+- 3 mission cards: Eco-Friendly, Energy Efficient, Smart Upgrades
+- Team section with 4 member cards (Sarah Chen, Marcus Johnson, Elena Rodriguez, David Kim)
+- Animated profile cards with hover effects
+- Scroll-triggered animations using Framer Motion
+
+**Interaction Section:**
+- Working camera functionality using `navigator.mediaDevices.getUserMedia()`
+- User-friendly error message if camera permission is denied
+- "Take a Picture" and "Scan Barcode" buttons
+- Animated product mockup (refrigerator) with AI analysis bubbles
+- Hover effects showing AI data points (Energy, Efficiency, Year)
+- Glowing circular animation on hover
+
+**Footer:**
+- ReviveTech logo and tagline
+- Quick links (About Us, How It Works, Privacy Policy, Contact)
+- Social media icons (GitHub, Twitter, LinkedIn, Mail)
+- Copyright notice with current year
 
 ### 2. Analyzing Page (`/analyzing`)
 - Full-screen AI analysis simulation

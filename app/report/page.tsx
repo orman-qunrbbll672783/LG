@@ -1,9 +1,10 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { mockData } from "@/lib/mockData";
+import { lgProducts, mockData } from "@/lib/mockData";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import { Cpu, Zap, TrendingUp, RotateCcw, CheckCircle2, AlertCircle } from "lucide-react";
 
@@ -11,6 +12,23 @@ const COLORS = ["#22c55e", "#10b981", "#059669"];
 
 export default function ReportPage() {
   const router = useRouter();
+  const [productData, setProductData] = useState(mockData);
+
+  useEffect(() => {
+    // Get selected product and year from sessionStorage
+    const selectedProduct = sessionStorage.getItem("selectedProduct");
+    const selectedYear = sessionStorage.getItem("selectedYear");
+
+    if (selectedProduct && selectedYear) {
+      const productYears = lgProducts[selectedProduct as keyof typeof lgProducts];
+      if (productYears) {
+        const data = (productYears as any)[selectedYear];
+        if (data) {
+          setProductData(data);
+        }
+      }
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-green-900 to-slate-900 py-12 px-4">
@@ -41,11 +59,11 @@ export default function ReportPage() {
           <CardContent>
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <h3 className="text-3xl font-bold text-green-400 mb-2">{mockData.appliance_name}</h3>
-                <p className="text-gray-300 text-lg mb-4">Category: {mockData.category}</p>
+                <h3 className="text-3xl font-bold text-green-400 mb-2">{productData.appliance_name}</h3>
+                <p className="text-gray-300 text-lg mb-4">Category: {productData.category}</p>
               </div>
               <div className="space-y-2">
-                {Object.entries(mockData.ai_detected_specs).map(([key, value]) => (
+                {Object.entries(productData.ai_detected_specs).map(([key, value]) => (
                   <div key={key} className="flex justify-between items-center bg-slate-800/50 rounded-lg px-4 py-2">
                     <span className="text-gray-400 capitalize">{key.replace(/_/g, " ")}:</span>
                     <span className="text-white font-semibold">{value}</span>
@@ -83,8 +101,8 @@ export default function ReportPage() {
                 <tbody>
                   <tr className="border-b border-slate-700/50">
                     <td className="py-3 px-4 text-white">Power Usage</td>
-                    <td className="py-3 px-4 text-red-400 font-semibold">{mockData.ai_detected_specs.power_usage}</td>
-                    <td className="py-3 px-4 text-green-400 font-semibold">{mockData.modern_benchmark.power_usage}</td>
+                    <td className="py-3 px-4 text-red-400 font-semibold">{productData.ai_detected_specs.power_usage}</td>
+                    <td className="py-3 px-4 text-green-400 font-semibold">{productData.modern_benchmark.power_usage}</td>
                     <td className="py-3 px-4">
                       <span className="bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-sm">
                         +75% higher
@@ -93,8 +111,8 @@ export default function ReportPage() {
                   </tr>
                   <tr className="border-b border-slate-700/50">
                     <td className="py-3 px-4 text-white">Cooling Efficiency</td>
-                    <td className="py-3 px-4 text-red-400 font-semibold">{mockData.ai_detected_specs.cooling_efficiency}</td>
-                    <td className="py-3 px-4 text-green-400 font-semibold">{mockData.modern_benchmark.cooling_efficiency}</td>
+                    <td className="py-3 px-4 text-red-400 font-semibold">{productData.ai_detected_specs.cooling_efficiency || productData.ai_detected_specs.wash_efficiency}</td>
+                    <td className="py-3 px-4 text-green-400 font-semibold">{productData.modern_benchmark.cooling_efficiency || productData.modern_benchmark.wash_efficiency}</td>
                     <td className="py-3 px-4">
                       <span className="bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-sm">
                         -17% lower
@@ -103,8 +121,8 @@ export default function ReportPage() {
                   </tr>
                   <tr>
                     <td className="py-3 px-4 text-white">Compressor Type</td>
-                    <td className="py-3 px-4 text-red-400 font-semibold">{mockData.ai_detected_specs.compressor_type}</td>
-                    <td className="py-3 px-4 text-green-400 font-semibold">{mockData.modern_benchmark.compressor_type}</td>
+                    <td className="py-3 px-4 text-red-400 font-semibold">{productData.ai_detected_specs.compressor_type || productData.ai_detected_specs.motor_type}</td>
+                    <td className="py-3 px-4 text-green-400 font-semibold">{productData.modern_benchmark.compressor_type || productData.modern_benchmark.motor_type}</td>
                     <td className="py-3 px-4">
                       <AlertCircle className="w-5 h-5 text-yellow-400" />
                     </td>
@@ -125,7 +143,7 @@ export default function ReportPage() {
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={mockData.visual_data.before_after_energy}>
+                <BarChart data={productData.visual_data.before_after_energy}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                   <XAxis dataKey="label" stroke="#9ca3af" />
                   <YAxis stroke="#9ca3af" />
@@ -156,7 +174,7 @@ export default function ReportPage() {
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie
-                    data={mockData.visual_data.efficiency_breakdown}
+                    data={productData.visual_data.efficiency_breakdown}
                     cx="50%"
                     cy="50%"
                     labelLine={false}
@@ -165,7 +183,7 @@ export default function ReportPage() {
                     fill="#8884d8"
                     dataKey="value"
                   >
-                    {mockData.visual_data.efficiency_breakdown.map((entry, index) => (
+                    {productData.visual_data.efficiency_breakdown.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
@@ -201,7 +219,7 @@ export default function ReportPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {mockData.upgrade_plan.map((upgrade, index) => (
+              {productData.upgrade_plan.map((upgrade, index) => (
                 <div key={index} className="flex items-start gap-4 bg-slate-800/50 rounded-lg p-4 hover:bg-slate-800/70 transition-colors">
                   <div className="flex-shrink-0">
                     <div className="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
@@ -230,7 +248,7 @@ export default function ReportPage() {
           </CardHeader>
           <CardContent>
             <p className="text-gray-300 text-lg leading-relaxed mb-6">
-              {mockData.ai_summary}
+              {productData.ai_summary}
             </p>
             <div className="grid md:grid-cols-3 gap-4">
               <div className="bg-green-500/10 border border-green-400/30 rounded-lg p-4 text-center">
@@ -249,12 +267,39 @@ export default function ReportPage() {
           </CardContent>
         </Card>
 
-        {/* Action Button */}
+        {/* Action Buttons */}
+        <div className="grid md:grid-cols-3 gap-6 mb-8">
+          <Button
+            onClick={() => router.push("/funding-marketplace")}
+            size="lg"
+            className="glass-dark glow-green text-white hover:glow-green-strong transition-all duration-300 text-lg px-8 py-6 rounded-xl"
+          >
+            💰 Funding Marketplace
+          </Button>
+          
+          <Button
+            onClick={() => router.push("/digital-twin")}
+            size="lg"
+            className="glass-dark glow-green text-white hover:glow-green-strong transition-all duration-300 text-lg px-8 py-6 rounded-xl"
+          >
+            🧩 View Digital Twin
+          </Button>
+          
+          <Button
+            onClick={() => router.push("/selling-automation")}
+            size="lg"
+            className="glass-dark glow-green text-white hover:glow-green-strong transition-all duration-300 text-lg px-8 py-6 rounded-xl"
+          >
+            🤖 AI Selling
+          </Button>
+        </div>
+
         <div className="text-center">
           <Button
             onClick={() => router.push("/")}
             size="lg"
-            className="glass-dark glow-green-strong text-white hover:bg-green-500/30 transition-all duration-300 text-lg px-12 py-6 rounded-xl group"
+            variant="outline"
+            className="glass-dark border-green-400/50 text-white hover:bg-green-500/20 transition-all duration-300 text-lg px-12 py-6 rounded-xl group"
           >
             <RotateCcw className="mr-2 h-6 w-6 group-hover:rotate-180 transition-transform duration-500" />
             Re-scan Another Appliance
