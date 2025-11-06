@@ -1,5 +1,7 @@
+import { ProductData } from './types';
+
 // LG Products Database with multiple years
-export const lgProducts = {
+export const lgProducts: Record<string, Record<number, ProductData>> = {
   "LG Smart Fridge": {
     2023: {
       appliance_name: "LG Smart Fridge 2023",

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { lgProducts, mockData } from "@/lib/mockData";
+import { ProductData } from "@/lib/types";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import { Cpu, Zap, TrendingUp, RotateCcw, CheckCircle2, AlertCircle } from "lucide-react";
 
@@ -12,7 +13,7 @@ const COLORS = ["#22c55e", "#10b981", "#059669"];
 
 export default function ReportPage() {
   const router = useRouter();
-  const [productData, setProductData] = useState(mockData);
+  const [productData, setProductData] = useState<ProductData>(mockData);
 
   useEffect(() => {
     // Get selected product and year from sessionStorage
@@ -110,9 +111,15 @@ export default function ReportPage() {
                     </td>
                   </tr>
                   <tr className="border-b border-slate-700/50">
-                    <td className="py-3 px-4 text-white">Cooling Efficiency</td>
-                    <td className="py-3 px-4 text-red-400 font-semibold">{productData.ai_detected_specs.cooling_efficiency || productData.ai_detected_specs.wash_efficiency}</td>
-                    <td className="py-3 px-4 text-green-400 font-semibold">{productData.modern_benchmark.cooling_efficiency || productData.modern_benchmark.wash_efficiency}</td>
+                    <td className="py-3 px-4 text-white">
+                      {productData.ai_detected_specs.cooling_efficiency ? 'Cooling Efficiency' : 'Wash Efficiency'}
+                    </td>
+                    <td className="py-3 px-4 text-red-400 font-semibold">
+                      {productData.ai_detected_specs.cooling_efficiency ?? productData.ai_detected_specs.wash_efficiency}
+                    </td>
+                    <td className="py-3 px-4 text-green-400 font-semibold">
+                      {productData.modern_benchmark.cooling_efficiency ?? productData.modern_benchmark.wash_efficiency}
+                    </td>
                     <td className="py-3 px-4">
                       <span className="bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-sm">
                         -17% lower
@@ -120,9 +127,15 @@ export default function ReportPage() {
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 text-white">Compressor Type</td>
-                    <td className="py-3 px-4 text-red-400 font-semibold">{productData.ai_detected_specs.compressor_type || productData.ai_detected_specs.motor_type}</td>
-                    <td className="py-3 px-4 text-green-400 font-semibold">{productData.modern_benchmark.compressor_type || productData.modern_benchmark.motor_type}</td>
+                    <td className="py-3 px-4 text-white">
+                      {productData.ai_detected_specs.compressor_type ? 'Compressor Type' : 'Motor Type'}
+                    </td>
+                    <td className="py-3 px-4 text-red-400 font-semibold">
+                      {productData.ai_detected_specs.compressor_type ?? productData.ai_detected_specs.motor_type}
+                    </td>
+                    <td className="py-3 px-4 text-green-400 font-semibold">
+                      {productData.modern_benchmark.compressor_type ?? productData.modern_benchmark.motor_type}
+                    </td>
                     <td className="py-3 px-4">
                       <AlertCircle className="w-5 h-5 text-yellow-400" />
                     </td>
